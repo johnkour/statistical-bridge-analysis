@@ -30,8 +30,8 @@ Please enter which year we will begin (default: 2009):\n''')
 if (len(start_year) < 1):    start_year = '2009'
 
 end_month = input('''
-Please enter which month we will end (default: 04):\n''')
-if (len(end_month) < 1):    end_month = '4'
+Please enter which month we will end (default: 03):\n''')
+if (len(end_month) < 1):    end_month = '3'
 end_year = input('''
 Please enter which year we will end (default: 2020):\n''')
 if (len(end_year) < 1):    end_year = '2020'
@@ -45,20 +45,19 @@ conn = sqlite3.connect('winddb.sqlite')
 cur = conn.cursor()
 
 cur.execute('''
-    CREATE TABLE IF NOT EXISTS Winds (
-            year INTEGER,
-            month INTEGER,
-            wind REAL)
-''')
+    DROP TABLE IF EXISTS Winds''')
+
+cur.execute('''
+    CREATE TABLE Winds (year INTEGER, month INTEGER, wind REAL)''')
 
 # PROCESSING THE DATA:
 
 while True:
-    
+
     cur.execute('''
     SELECT wind FROM Winds WHERE year = ? AND month = ?''', (year, month))
     row = cur.fetchone()
-    
+
     aux_url = str(year) + '-'
     if month < 10:    aux_url = aux_url + '0'
     aux_url = aux_url + str(month) + '.txt'
@@ -74,11 +73,10 @@ while True:
     [w.append(float(x)) for x in wind]
     max_wind = max(w)
 #    print(max_wind)
-    
+
     cur.execute('''
-    INSERT OR IGNORE INTO Winds (year, month, wind)
-    VALUES (?, ?, ?)''', (year,month, max_wind))
-    
+    INSERT INTO Winds (year, month, wind) VALUES (?, ?, ?)''', (year,month, max_wind))
+
     if (month == int(end_month)) and (year == int(end_year)):    break
 
     if month == 12:
