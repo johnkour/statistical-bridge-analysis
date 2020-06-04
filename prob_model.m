@@ -1,6 +1,6 @@
 %% =======================ADD FOLDER TO PATH===============================
 
-addpath('D:/jkour/Documents/Σχολή/4ο έτος/Εαρινό εξάμηνο/Αξιοπιστία και διακινδύνευση/Εργασία εξαμήνου/Προγραμματιμός');
+addpath('D:/jkour/Documents/Γ“Γ·Γ―Γ«Γ/4Γ― ΓΓ΄Γ―Γ²/Γ…Γ΅Γ±Γ©Γ­ΓΌ Γ¥Γ®ΓΓ¬Γ§Γ­Γ―/ΓΓ®Γ©Γ―Γ°Γ©Γ³Γ΄ΓΓ΅ ΓªΓ΅Γ© Γ¤Γ©Γ΅ΓªΓ©Γ­Γ¤Γ½Γ­Γ¥ΓµΓ³Γ§/Γ…Γ±Γ£Γ΅Γ³ΓΓ΅ Γ¥Γ®Γ΅Γ¬ΓΓ­Γ―Γµ/ΓΓ±Γ―Γ£Γ±Γ΅Γ¬Γ¬Γ΅Γ΄Γ©Γ¬ΓΌΓ²');
 clear; close all; clc;
 
 %% ===================IMPORT MATRICES FROM CSVs============================
@@ -17,7 +17,7 @@ wind = transpose(wind);
 
 %% ====================CALCULATE WIND SPEED LOCALY=========================
 
-z_ref = 432;                     % Provided by meteosearch for Megalopoli.
+z_ref = 10;                     % Provided by meteosearch for Megalopoli.
 z = 10;                          % Provided by the exercise.
 wind = w_speed(z, z_ref, wind);
 
