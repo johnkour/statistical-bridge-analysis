@@ -17,7 +17,7 @@ wind = transpose(wind);
 
 %% ====================CALCULATE WIND SPEED LOCALY=========================
 
-z_ref = 10;                     % Provided by meteosearch for Megalopoli.
+z_ref = 10;                      % Provided by meteosearch for Megalopoli.
 z = 10;                          % Provided by the exercise.
 wind = w_speed(z, z_ref, wind);
 
