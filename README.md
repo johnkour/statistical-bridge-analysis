@@ -8,3 +8,4 @@ Part of the project of analizing an existing bridge statistically
   Specifically, **values.csv** contains the maximum average wind speed per month and **keys.csv** contains the year and the month                      assigned 	 to every row of *values.csv*.
   **w_speed** is an exponential function used to calculate the windspeed localy from the windspeed of the meteo-station.
   **prob_model** is used to try out several distributions for the windspeed.
+  **prob_analysis** is the file containing the stuctural anlysis with probability theory. 
