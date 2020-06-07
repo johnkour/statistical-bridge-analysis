@@ -174,6 +174,14 @@ subplot(3, 3, 5); qqplot(wind, pd); title('Weibull');
 figure(4)
 subplot(2, 3, 3); probplot(pd, wind); title('Weibull');
 
+%------------------------KOLMOGOROV-SMIRNOV TEST---------------------------
+
+[h(1,1), p(1,1), d(1,1), d_crit(1,1)] = kstest(wind, 'CDF', pd);
+
+%---------------------------LILLIEFORS TEST--------------------------------
+
+[h(2,1), p(2,1), d(2,1), d_crit(2,1)] = kstest(wind, 'CDF', pd);
+
 %% =========================GAMMA DISTRIBUTION=============================
 
 [params,~] = gamfit(wind);
@@ -231,6 +239,14 @@ subplot(3, 3, 7); qqplot(wind, pd); title('Extreme Value');
 
 figure(4)
 subplot(2, 3, 5); probplot(pd, wind); title('Extreme Value');
+
+%------------------------KOLMOGOROV-SMIRNOV TEST---------------------------
+
+[h(1,2), p(1,2), d(1,2), d_crit(1,2)] = kstest(wind,'CDF',pd);
+
+%---------------------------LILLIEFORS TEST--------------------------------
+
+[h(2,2), p(2,2), d(2,2), d_crit(2,2)] = kstest(wind,'CDF',pd);
 
 %% ======================HALFNORMAL DISTRIBUTION===========================
 
@@ -298,3 +314,32 @@ f1.Name = 'Histogram v PDF';
 f2.Name = 'CDFs';
 f3.Name = 'Q-Q plots';
 f4.Name = 'Probability plots';
+
+saveas(f1, f1.Name, 'jpeg');
+saveas(f2, f2.Name, 'jpeg');
+saveas(f3, f3.Name, 'jpeg');
+saveas(f4, f4.Name, 'jpeg');
+
+if h(1,1) == 0
+    disp('Weibull distribution passes K-S test.')
+else
+    disp("Weibull distribution doesn't pass K-S test.")
+end
+
+if h(2,1) == 0
+    disp('Weibull distribution passes Lilliefors test.')
+else
+    disp("Weibull distribution doesn't pass Lilliefors test.")
+end
+
+if h(1,2) == 0
+    disp('Extreme value distribution passes K-S test.')
+else
+    disp("Extreme value distribution doesn't pass K-S test.")
+end
+
+if h(2,2) == 0
+    disp('Extreme value distribution passes Lilliefors test.')
+else
+    disp("Extreme value distribution doesn't pass Lilliefors test.")
+end
