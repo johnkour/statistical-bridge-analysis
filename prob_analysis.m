@@ -27,53 +27,52 @@ m = length(wind);
 
 %% ======================DISTRIBUTION TESTING==============================
 
-% prob_model(wind)                % We choose Gumbel distribution.
+% prob_model(wind)
 
-%% =================CALCULATE EXPECTED WIND SPEED==========================
+%% ================INITIALIZE VALUES FOR TESTING, PART 1===================
 
-pd = fitdist(wind, 'ExtremeValue');
+wind_distr = 'ExtremeValue';% We choose Gumbel distribution.
 
-T = [25; 50; 75; 100; 150];
-p = 1 ./ T; p = 1 - p;
-
-v_ref = icdf(pd, p);
-
-%% ============================WIND LOAD===================================
-
-c_p_net = 0.55;
-w_e = wind_load(v_ref,c_p_net);      % Wind load in kPa.
+c_p_net = 0.55;             % Pressure parameter.
+g = 0.35;                   % Permanent loads of the truss(kPa).
 
 L = 4;                      % Length of each piece of the bridge's roof.
 h = 2;                      % Heigth of the roof of the truss.
 b = 6;                      % Width each piece of the bridge's roof.
 A_b = b .* L;               % Area each piece of the bridge's roof.
 
-%% =====================PREPARE LOADS FOR ANALYSIS=========================
-
-w_e = w_e .* b;             % Distributed wind load on the roof(kN/m).
-
-g = 0.35;                   % Permanent loads of the truss.
-
 A = 2570 ./ 10 .^ 6;        % Area of every CHS in meters squared.
 E = 200 .* 10 .^ 6;         % Elasticity modulus of every CHS.
 
-q = g + w_e;
+f_y = 355;                  % Mpa
 
-%% ==================CALCULATE OPTIMA OF THE AXIAL FORCES==================
+I = 856 ./ 10 .^ 8;         % Moment of inertia for every element.
+alpha = 0.21;               % Parameter for buckling analysis.
 
-N_min = zeros(size(q));
-N_max = N_min;
-for i = 1:length(q)
-    [N_min(i), N_max(i)] = thema(q(i), L, h, E, A);
-end
+T = [25; 50; 75; 100; 150]; % Restoration periods for testing, part 1.
 
-%% =====================STRENGTH OF EACH MEMBER============================
+N_mc = 1 .* 10 .^6;         % Number of Monte Carlo samples for testing, p1
 
-f_y = 355;                      % Mpa
-params(1) = 1.15 .* f_y;        % Mean.
-params(2) = 0.35 .* params(1);  % Standard deviation
+%% ========================PART 1 OF TESTING===============================
 
-pd = makedist('Normal', 'mu', params(1), 'sigma', params(2));
+MC_Prob(:,1) = wind_testing(wind, wind_distr, T, c_p_net, g, L, h, b, ... 
+                            A, E, f_y, I, alpha, N_mc);
+
+%% ================INITIALIZE VALUES FOR TESTING, PART 2===================
+
+snow_distr = 'Lognormal';   % Distribution of snow load.
+
+mean_s = 0.6;               % Mean of snow load(kPa).
+sigma_s = 0.4;              % Standard deviation of snow load(kPa).
+
+T = [25; 50; 75; 100; 150]; % Restoration periods for testing, part 2.
+
+N_mc = 1 .* 10 .^6;         % Number of Monte Carlo samples for testing, p2
+
+%% ========================PART 2 OF TESTING===============================
+
+MC_Prob(:,2) = snow_testing(snow_distr, mean_s, sigma_s, T, g, ... 
+                            L, h, b, A, E, f_y, I, alpha, N_mc);
 
 %% ========================================================================
 
