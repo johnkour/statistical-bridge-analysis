@@ -9,3 +9,8 @@ Part of the project of analizing an existing bridge statistically
   **w_speed** is an exponential function used to calculate the windspeed localy from the windspeed of the meteo-station.
   **prob_model** is used to try out several distributions for the windspeed.
   **prob_analysis** is the file containing the stuctural anlysis with probability theory. 
+  **wind_testing** is the file containing the analysis for the wind load (end of the first part of the assignment).
+  **wind_load** is a file calculating the wind load from the wind speed according to EN1991.
+  **snow_testing** is the file containing the analysis for the snow load(second part of the assignment).
+  **buck_res** is used to calculate the resistance of the weakest element of the truss to buckling.
+  **simple_monte_carlo** performs a number of Monte Carlo simulations to determine the probability of failure due to one kind of uncertainty (wind-load or snow-load).
