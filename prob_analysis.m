@@ -52,11 +52,16 @@ alpha = 0.21;               % Parameter for buckling analysis.
 T = [25; 50; 75; 100; 150]; % Restoration periods for testing, part 1.
 
 N_mc = 1 .* 10 .^6;         % Number of Monte Carlo samples for testing, p1
+M_mc = 10 .^ 2;             % Number of Monte Carlo sim/s for testing, p1
 
 %% ========================PART 1 OF TESTING===============================
 
-MC_Prob(:,1) = wind_testing(wind, wind_distr, T, c_p_net, g, L, h, b, ... 
-                            A, E, f_y, I, alpha, N_mc);
+fprintf('WIND LOAD ANALYSIS:\n\n')
+
+[MC_Prob(:,1), MC_P_std(:,1)] = wind_testing(wind, wind_distr, T, ... 
+                                                c_p_net, g, L, h, b, A, ...
+                                                E, f_y, I, alpha, ...
+                                                N_mc, M_mc);
 
 %% ================INITIALIZE VALUES FOR TESTING, PART 2===================
 
@@ -68,11 +73,16 @@ sigma_s = 0.4;              % Standard deviation of snow load(kPa).
 T = [25; 50; 75; 100; 150]; % Restoration periods for testing, part 2.
 
 N_mc = 1 .* 10 .^6;         % Number of Monte Carlo samples for testing, p2
+M_mc = 10 .^ 2;             % Number of Monte Carlo sim/s for testing, p2
 
 %% ========================PART 2 OF TESTING===============================
 
-MC_Prob(:,2) = snow_testing(snow_distr, mean_s, sigma_s, T, g, ... 
-                            L, h, b, A, E, f_y, I, alpha, N_mc);
+fprintf('\nSNOW LOAD ANALYSIS:\n\n')
+
+[MC_Prob(:,2), MC_P_std(:,2)] = snow_testing(snow_distr, mean_s, ... 
+                                                    sigma_s, T, g, L, ...
+                                                    h, b, A, E, f_y, I, ...
+                                                    alpha, N_mc, M_mc);
 
 %% ========================================================================
 

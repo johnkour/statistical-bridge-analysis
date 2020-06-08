@@ -1,5 +1,6 @@
-function [MC_Prob] = wind_testing(wind, wind_distr, T, c_p_net, g, L, ...
-                                         h, b, A, E, f_y, I, alpha, N_mc)
+function [MC_Prob, MC_P_std] = wind_testing(wind, wind_distr, T, ...
+                                         c_p_net, g, L, h, b, A, E, ...
+                                         f_y, I, alpha, N_mc, M_mc)
 %TESTING, PART 1: WIND
 %   This function performs all the necessary tests required to evaluate
 %   whether the truss will fail due to wind load. It returns a vector with
@@ -39,7 +40,8 @@ pd = makedist('Normal', 'mu', params(1), 'sigma', params(2));
 
 %% =======================MONTE CARLO SIMULATION===========================
 
-MC_Prob = simple_monte_carlo(N_min, N_max, N_mc, T, pd, L, A, E, I, alpha);
+[MC_Prob, MC_P_std] = simple_monte_carlo(N_min, N_max, N_mc, M_mc, T, ...
+                                pd, L, A, E, I, alpha);
 
 end
 
