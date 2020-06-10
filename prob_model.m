@@ -1,4 +1,4 @@
-function [] = prob_model(wind)
+function [f] = prob_model(wind, f)
 %PROBABILITY DISTRIBUTION FOR DATA
 %   This function tests 9 probability distributions to the data.
 %   Distributions:
@@ -20,7 +20,7 @@ s_wind = std(wind);
 max_w = max(wind);
 min_w = min(wind);
 
-[hist, ECDF] = Empirical_Data(wind);
+[hist, ECDF, f] = Empirical_Data(wind, f);
 
 hist.FaceColor = '#EDB120';
 % hist.Normalization = 'pdf';
@@ -36,7 +36,7 @@ pd = fitdist(wind, 'GeneralizedExtremeValue');
 
 f(1,:) = pdf(pd, y);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(1,:), 'Color', [0.4660 0.6740 0.1880]);
 legend('Histogram', 'Generalized Extreme Value');
@@ -44,16 +44,16 @@ hold off;
 
 F(1,:) = cdf(pd, y);
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(1,:), 'Color', [0.4660 0.6740 0.1880]);
 legend('Empirical', 'Generalized Extreme Value');
 hold off;
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 1); qqplot(wind, pd); title('Generalized Extreme Value');
 
-figure(4)
+figure(f + 3)
 subplot(2, 3, 1); probplot(pd, wind); title('Generalized Extreme Value');
 
 
@@ -63,7 +63,7 @@ subplot(2, 3, 1); probplot(pd, wind); title('Generalized Extreme Value');
 
 f(2,:) = exppdf(y, param);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(2,:), 'y');
 legend('Histogram', 'Generalized Extreme Value', 'Exponential');
@@ -71,7 +71,7 @@ hold off;
 
 F(2,:) = expcdf(y, mean_w);
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(2,:), 'y');
 legend('Empirical', 'Generalized Extreme Value', 'Exponential');
@@ -79,7 +79,7 @@ hold off;
 
 pd = fitdist(wind, 'Exponential');
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 2); qqplot(wind, pd); title('Exponential');
 
 %% =======================LOGNORMAL DISTRIBUTION===========================
@@ -90,7 +90,7 @@ pd = makedist('Lognormal', 'mu', params(1), 'sigma', params(2));
 
 f(3,:) = pdf(pd,y);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(3,:), 'g');
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -99,14 +99,14 @@ hold off;
 
 F(3,:) = logncdf(y, params(1), params(2));
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(3,:), 'g');
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
                 'Lognormal');
 hold off;
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 3); qqplot(wind, pd); title('Lognormal');
 
 %% =======================NORMAL DISTRIBUTION==============================
@@ -115,7 +115,7 @@ pd = fitdist(wind, 'Normal');
 
 f(4,:) = pdf(pd, y);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(4,:), 'm');
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -124,17 +124,17 @@ hold off;
 
 F(4,:) = cdf(pd, y);
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(4,:), 'm');
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
                 'Lognormal', 'Normal');
 hold off;
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 4); qqplot(wind, pd); title('Normal');
 
-figure(4)
+figure(f + 3)
 subplot(2, 3, 2); probplot(pd, wind); title('Normal');
 
 %% ========================WEIBULL DISTRIBUTION============================
@@ -143,7 +143,7 @@ subplot(2, 3, 2); probplot(pd, wind); title('Normal');
 
 f(5,:) = wblpdf(y, params(1), params(2));
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(5,:), 'Color', [0.3010 0.7450 0.9330]);
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -152,7 +152,7 @@ hold off;
 
 F(5,:) = wblcdf(y, params(1), params(2));
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(5,:), 'Color', [0.3010 0.7450 0.9330]);
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ... 
@@ -161,10 +161,10 @@ hold off;
 
 pd = fitdist(wind, 'Weibull');
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 5); qqplot(wind, pd); title('Weibull');
 
-figure(4)
+figure(f + 3)
 subplot(2, 3, 3); probplot(pd, wind); title('Weibull');
 
 %------------------------KOLMOGOROV-SMIRNOV TEST---------------------------
@@ -181,7 +181,7 @@ subplot(2, 3, 3); probplot(pd, wind); title('Weibull');
 
 f(6,:) = gampdf(y, params(1), params(2));
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(6,:), 'k');
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -190,7 +190,7 @@ hold off;
 
 F(6,:) = gamcdf(y, params(1), params(2));
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(6,:), 'k');
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
@@ -199,10 +199,10 @@ hold off;
 
 pd = fitdist(wind, 'Gamma');
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 6); qqplot(wind, pd); title('Gamma');
 
-figure(4)
+figure(f + 3)
 subplot(2, 3, 4); probplot(pd, wind); title('Gamma');
 
 %% =======================EXTREME VALUE DISTRIBUTION=======================
@@ -211,7 +211,7 @@ pd = fitdist(wind, 'ExtremeValue');
 
 f(7,:) = pdf(pd, y);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(7,:), 'Color', [0.6350 0.0780 0.1840]);
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -221,7 +221,7 @@ hold off;
 
 F(7,:) = cdf(pd, y);
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(7,:), 'Color', [0.6350 0.0780 0.1840]);
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
@@ -229,10 +229,10 @@ legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
                 'Extreme Value');
 hold off;
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 7); qqplot(wind, pd); title('Extreme Value');
 
-figure(4)
+figure(f + 3)
 subplot(2, 3, 5); probplot(pd, wind); title('Extreme Value');
 
 %------------------------KOLMOGOROV-SMIRNOV TEST---------------------------
@@ -249,7 +249,7 @@ pd = fitdist(wind, 'HalfNormal');
 
 f(8,:) = pdf(pd, y);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(8,:), 'c');
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -259,7 +259,7 @@ hold off;
 
 F(8,:) = cdf(pd, y);
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(8,:), 'c');
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
@@ -267,7 +267,7 @@ legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
                 'Extreme Value', 'Half Normal');
 hold off;
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 8); qqplot(wind, pd); title('Half Normal');
 
 %% ======================NAKAGAMI DISTRIBUTION=============================
@@ -276,7 +276,7 @@ pd = fitdist(wind, 'Nakagami');
 
 f(9,:) = pdf(pd, y);
 
-figure(1)
+figure(f)
 hold on;
 plot(y, f(9,:), 'r');
 legend('Histogram', 'Generalized Extreme Value', 'Exponential', ...
@@ -286,7 +286,7 @@ hold off;
 
 F(9,:) = cdf(pd, y);
 
-figure(2)
+figure(f + 1)
 hold on;
 plot(y, F(9,:), 'r');
 legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
@@ -294,18 +294,18 @@ legend('Empirical', 'Generalized Extreme Value', 'Exponential', ...
                 'Extreme Value', 'HalfNormal', 'Nakagami');
 hold off;
 
-figure(3)
+figure(f + 2)
 subplot(3, 3, 9); qqplot(wind, pd); title('Nakagami');
 
-figure(4)
+figure(f + 3)
 subplot(2, 3, 6); probplot(pd, wind); title('Nakagami');
 
 %% ==========================PLOT MANAGEMENT===============================
 
-f1 = figure(1);
-f2 = figure(2);
-f3 = figure(3);
-f4 = figure(4);
+f1 = figure(f);         f = f + 1;
+f2 = figure(f);         f = f + 1;
+f3 = figure(f);         f = f + 1;
+f4 = figure(f);         f = f + 1;
 
 f1.Name = 'Histogram v PDF';
 f2.Name = 'CDFs';

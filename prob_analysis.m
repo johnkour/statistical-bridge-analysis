@@ -4,6 +4,7 @@ addpath(genpath(...
 'D:/jkour/Documents/Σχολή/4ο έτος/Εαρινό εξάμηνο/Αξιοπιστία και διακινδύνευση/Εργασία εξαμήνου/Προγραμματιμός'));
 
 clear; close all; clc;
+f = 1;          % figure indexing.
 
 %% ===================IMPORT MATRICES FROM CSVs============================
 
@@ -27,7 +28,7 @@ m = length(wind);
 
 %% ======================DISTRIBUTION TESTING==============================
 
-% prob_model(wind)
+% f = prob_model(wind)
 
 %% ================INITIALIZE VALUES FOR TESTING, PART 1===================
 
@@ -84,5 +85,23 @@ fprintf('\nSNOW LOAD ANALYSIS:\n\n')
                                                     h, b, A, E, f_y, I, ...
                                                     alpha, N_mc, M_mc);
 
-%% ========================================================================
+%% ================INITIALIZE VALUES FOR TESTING, PART 3===================
+
+wind_start = 0;     % km/h.
+wind_end = 30;      % km/h.
+
+snow_start = 0;     % kPa.
+snow_end = 4.5;     % kPa.
+
+points = 1 .* 10 .^ 3;
+
+T = 50;             % years.
+
+%% ========================PART 3 OF TESTING===============================
+
+close all;
+[W, S, p, P, f] = join_prob(wind, wind_distr, c_p_net, snow_distr, ...
+                mean_s, sigma_s, wind_start, wind_end, snow_start, ...
+                snow_end, points, f);
+
 

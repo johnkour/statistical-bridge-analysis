@@ -1,4 +1,4 @@
-function [w_e] = wind_load(v_ref,c_p_net)
+function [w_e] = wind_load(v_ref, c_p_net)
 %WIND LOAD
 %   This function uses the wind speed(v_ref) and a simplistic uniform value
 %   for the pressure parameter(c_p_net) to calculate the wind load
