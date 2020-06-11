@@ -6,13 +6,14 @@ function [N_rd] = buck_res(L, A, E, I, f_y, alpha)
 %   resistance of the member.
 
 L_cr = 1 .* L;  i = sqrt(I ./ A);
+f_y = f_y .* 10 .^ 3;
 
 lambda1 = pi .* sqrt(E ./ f_y);
 lambda = L_cr ./ (i .* lambda1);
 Fi = 0.5 .* (1 + alpha .* (lambda - 0.2) + lambda .^ 2);
 x = 1 ./ (Fi + sqrt(Fi .^ 2 - lambda .^ 2));    x = min(x, 1);
 
-N_rd = x .* f_y .* A .* 10 .^ 3;
+N_rd = x .* f_y .* A;
 
 end
 
