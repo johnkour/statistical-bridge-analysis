@@ -1,4 +1,4 @@
-function [W, S, p, P, f] = join_prob(wind, wind_distr, c_p_net, ...
+function [W, S, p, P, f, loads] = join_prob(wind, wind_distr, c_p_net, ...
                                       snow_distr, mean_s, sigma_s, ...
                                       wind_start, wind_end, snow_start, ...
                                       snow_end, points, f)
@@ -12,7 +12,8 @@ function [W, S, p, P, f] = join_prob(wind, wind_distr, c_p_net, ...
 %   the figures(f) in order to produce a grid of combinations for the
 %   values of wind speed(W) and snow load(S) and the matrices of the joined
 %   PDFs(p) and joined CDFs(P). The results are plotted. The new index of
-%   the figures is also exported(f).
+%   the figures is also exported(f), as are the loads that are estimated
+%   manually using the graph of the joined CDF.
 
 pd_w = fitdist(wind, wind_distr);
 
@@ -67,6 +68,10 @@ P_s = cdf(pd_s, s);
 
 [W,S] = meshgrid(w, s);
 p = pdf(pd_w, W) .* pdf(pd_s, S);
+val = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.97, ...
+       0.98, 0.99];
+%val = [0.97, 0.98, 0.99];
+
 P = cdf(pd_w, W) .* cdf(pd_s, S);
 
 %figure(f)
@@ -93,11 +98,23 @@ P = cdf(pd_w, W) .* cdf(pd_s, S);
 %f = f + 1;
 
 figure(f)
+hold on
 set(gcf,'NumberTitle','off') %don't show the figure number
 set(gcf,'Name','Joined CDF contour')
-contour(W, S, P, '-.', 'ShowText', 'on');
+contour(W, S, P, val, '-.', 'ShowText', 'on');
 xlabel('Wind speed (km/h)');    ylabel('Snow load (kPa)');
+
+
+loads = graphical_var();
+for i = 1:length(loads)
+    plot(loads(i,1) .* ones(points), s, ':')
+    plot(w, loads(i,2) .* ones(points), ':')
+end
+plot(loads(:,1), loads(:,2), 'ro')
+hold off
 f = f + 1;
+
+loads = graphical_loads(c_p_net);
 
 end
 

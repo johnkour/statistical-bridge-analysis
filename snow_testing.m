@@ -41,8 +41,19 @@ pd = makedist('Normal', 'mu', params(1), 'sigma', params(2));
 
 %% =======================MONTE CARLO SIMULATION===========================
 
-[MC_Prob, MC_P_std] = simple_monte_carlo(N_min, N_max, N_mc, M_mc, T, ...
+[MC_Prob, MC_P_std] = simple_monte_carlo(N_min, N_max, N_mc, M_mc, ...
                                     pd, L, A, E, I, alpha);
+
+%% ==========================EXPORT RESULTS================================
+
+for i = 1:length(N_min)
+    fprintf( ...
+      'The probability of failure for T = %d years is: %.2f percent.\n', ...
+                    T(i), MC_Prob(i) .* 100);
+
+end
+
+%--------------------------------------------------------------------------
 
 end
 

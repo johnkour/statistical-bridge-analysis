@@ -1,5 +1,5 @@
 function [MC_Prob, MC_Prob_std] = simple_monte_carlo(N_min, N_max, ...
-                                            N_mc, M_mc, T, pd, L, A, ...
+                                            N_mc, M_mc, pd, L, A, ...
                                             E, I, alpha)
 %MONTE CARLO FOR THE WIND SPEED
 %   This function computes the probability of failure(MC_Prob) according to
@@ -37,13 +37,7 @@ end
 MC_Prob = mean(temp, 2);
 MC_Prob_std = std(temp, 0, 2);         % Standard deviation for MC_Prob.
 
-for i = 1:length(N_min)
-    fprintf( ...
-      'The probability of failure for T = %d years is: %.2f percent.\n', ...
-                    T(i), MC_Prob(i) .* 100);
-
-end
-
+%--------------------------------------------------------------------------
 
 end
 

@@ -100,8 +100,13 @@ T = 50;             % years.
 %% ========================PART 3 OF TESTING===============================
 
 close all;
-[W, S, p, P, f] = join_prob(wind, wind_distr, c_p_net, snow_distr, ...
-                mean_s, sigma_s, wind_start, wind_end, snow_start, ...
-                snow_end, points, f);
+[W, S, p, P, f, loads] = join_prob(wind, wind_distr, c_p_net, ...
+                snow_distr, mean_s, sigma_s, wind_start, wind_end, ...
+                snow_start, snow_end, points, f);
 
+%% ======================TESTING FOR WIND AND SNOW=========================
 
+fprintf('\nCOMBINED SNOW AND WIND LOAD ANALYSIS:\n\n')
+
+[MC_Prob_j, MC_P_std_j] = joined_an(loads, g, L, h, b, A, E, ...
+                                            f_y, I, alpha, N_mc, M_mc);

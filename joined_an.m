@@ -1,27 +1,16 @@
-function [MC_Prob, MC_P_std] = wind_testing(wind, wind_distr, T, ...
-                                         c_p_net, g, L, h, b, A, E, ...
-                                         f_y, I, alpha, N_mc, M_mc)
-%TESTING, PART 1: WIND
+function [MC_Prob, MC_P_std] = joined_an(loads, g, L, h, b, ...
+                                            A, E, f_y, I, alpha, N_mc, ...
+                                            M_mc)
+%TESTING, PART 3: SNOW AND WIND
 %   This function performs all the necessary tests required to evaluate
 %   whether the truss will fail due to wind load. It returns a vector with
 %   the probability of failure(MC_Prob) for every value of the restoration 
 %   period(T).
 
-%% =================CALCULATE EXPECTED WIND SPEED==========================
-
-pd = fitdist(wind, wind_distr);
-
-p = 1 ./ T; p = 1 - p;
-
-v_ref = icdf(pd, p);
-
-%% ============================WIND LOAD===================================
-
-w_e = wind_load(v_ref,c_p_net);      % Wind load in kPa.
 
 %% =====================PREPARE LOADS FOR ANALYSIS=========================
 
-q = g + w_e;    q = q .* b; % Distributed loads of the truss(kN/m).
+q = g + sum(loads, 2);  q = q .* b; % Distributed loads of the truss(kN/m).
 
 %% ==================CALCULATE OPTIMA OF THE AXIAL FORCES==================
 
@@ -45,10 +34,10 @@ pd = makedist('Normal', 'mu', params(1), 'sigma', params(2));
 
 %% ==========================EXPORT RESULTS================================
 
-for i = 1:length(N_min)
+for i = 1:length(q)
     fprintf( ...
-      'The probability of failure for T = %d years is: %.2f percent.\n', ...
-                    T(i), MC_Prob(i) .* 100);
+'The probability of failure for wind = %.4f kPa and snow = %.2f kPa is: %.2f percent.\n', ...
+                    loads(i, 1), loads(i, 2), MC_Prob(i) .* 100);
 
 end
 
