@@ -97,6 +97,9 @@ points = 1 .* 10 .^ 3;
 
 T = 50;             % years.
 
+N_mc = 1 .* 10 .^4;         % Number of Monte Carlo samples for testing, p3
+M_mc = 10 .^ 2;             % Number of Monte Carlo sim/s for testing, p3
+
 %% ========================PART 3 OF TESTING===============================
 
 close all;
@@ -110,3 +113,11 @@ fprintf('\nCOMBINED SNOW AND WIND LOAD ANALYSIS:\n\n')
 
 [MC_Prob_j, MC_P_std_j] = joined_an(loads, g, L, h, b, A, E, ...
                                             f_y, I, alpha, N_mc, M_mc);
+%% ===========================RISK ANALYSIS================================
+
+points = 100;   % The difference from 50 to 100 points is less than 2%.
+
+[MFA, Dlambda] = Risk_an(W, S, P, points, g, L, h, b, A, E, f_y, I, ...
+                                            alpha, N_mc, M_mc, c_p_net);
+
+fprintf('\nThe risk of failure is: %.2f percent.\n', MFA.*100);
