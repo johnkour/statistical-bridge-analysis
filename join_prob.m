@@ -82,12 +82,12 @@ P = cdf(pd_w, W) .* cdf(pd_s, S);
 %ylabel('Snow load (kPa)');      zlabel('Probability (%)');
 %f = f + 1;
 
-%figure(f)
-%set(gcf,'NumberTitle','off') %don't show the figure number
-%set(gcf,'Name','Joined PDF contour')
-%contour(W, S, p, '-.', 'ShowText', 'on');
-%xlabel('Wind speed (km/h)');    ylabel('Snow load (kPa)');
-%f = f + 1;
+figure(f)
+set(gcf,'NumberTitle','off') %don't show the figure number
+set(gcf,'Name','Joined PDF contour')
+contour(W, S, p, '-.', 'ShowText', 'on');
+xlabel('Wind speed (km/h)');    ylabel('Snow load (kPa)');
+f = f + 1;
 
 %figure(f)
 %set(gcf,'NumberTitle','off') %don't show the figure number

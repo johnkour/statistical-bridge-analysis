@@ -21,7 +21,7 @@ w_e = wind_load(v_ref,c_p_net);      % Wind load in kPa.
 
 %% =====================PREPARE LOADS FOR ANALYSIS=========================
 
-q = g + w_e;    q = q .* b; % Distributed loads of the truss(kN/m).
+q = g + w_e;    q = q .* b ./ 2; % Distributed loads of the truss(kN/m).
 
 %% ==================CALCULATE OPTIMA OF THE AXIAL FORCES==================
 

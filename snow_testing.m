@@ -22,7 +22,7 @@ p = 1 ./ T; p = 1 - p;
 
 snow = icdf(pd, p);             % Snow load in kPa.
 
-q = g + snow;    q = q .* b;    % Distributed loads of the truss(kN/m).
+q = g + snow;    q = q .* b ./ 2;    % Distributed loads of the truss(kN/m).
 
 %% ==================CALCULATE OPTIMA OF THE AXIAL FORCES==================
 

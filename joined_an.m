@@ -10,7 +10,7 @@ function [MC_Prob, MC_P_std] = joined_an(loads, g, L, h, b, ...
 
 %% =====================PREPARE LOADS FOR ANALYSIS=========================
 
-q = g + sum(loads, 2);  q = q .* b; % Distributed loads of the truss(kN/m).
+q = g + sum(loads, 2);  q = q .* b ./ 2; % Distributed loads of the truss(kN/m).
 
 %% ==================CALCULATE OPTIMA OF THE AXIAL FORCES==================
 
