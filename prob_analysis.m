@@ -28,11 +28,11 @@ m = length(wind);
 
 %% ======================DISTRIBUTION TESTING==============================
 
-% f = prob_model(wind)
+% f = prob_model(wind, f);
 
 %% ================INITIALIZE VALUES FOR TESTING, PART 1===================
 
-wind_distr = 'ExtremeValue';% We choose Gumbel distribution.
+wind_distr = 'ExtremeValue';% We choose Extreme Value distribution.
 
 c_p_net = 0.55;             % Pressure parameter.
 g = 0.35;                   % Permanent loads of the truss(kPa).
@@ -115,7 +115,7 @@ fprintf('\nCOMBINED SNOW AND WIND LOAD ANALYSIS:\n\n')
                                             f_y, I, alpha, N_mc, M_mc);
 %% ===========================RISK ANALYSIS================================
 
-points = 100;   % The difference from 50 to 100 points is less than 2%.
+points = 10 .^ 3;   % The difference from 50 to 100 points is less than 2%.
 
 [MFA, Dlambda] = Risk_an(W, S, P, points, g, L, h, b, A, E, f_y, I, ...
                                             alpha, N_mc, M_mc, c_p_net);

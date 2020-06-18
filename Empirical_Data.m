@@ -1,4 +1,4 @@
-function [hist, cdf , f] = Empirical_Data(data, f)
+function [hist, cdf] = Empirical_Data(data, f)
 %VISUALIZATION OF THE EMPIRICAL DATA
 %   This function gets the empirical data as a vector (data) and the index 
 %   of the figures(f) and plots and returns (as objects) their histogram 
@@ -22,7 +22,6 @@ title('');
 xlabel('maximum anual average wind speed(km/h)');
 ylabel('Fraction of observations');
 legend('Empirical CDF', 'Location', 'best');
-f = f + 2;
 
 end
 
