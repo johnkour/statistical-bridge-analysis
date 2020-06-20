@@ -14,3 +14,4 @@ Part of the project of analizing an existing bridge statistically
   **snow_testing** is the file containing the analysis for the snow load(second part of the assignment).
   **buck_res** is used to calculate the resistance of the weakest element of the truss to buckling.
   **simple_monte_carlo** performs a number of Monte Carlo simulations to determine the probability of failure due to one kind of uncertainty (wind-load or snow-load).
+The files in folder **Solver in Matlab** were provided by the **School Of Civil Engineering, NTUA**.
