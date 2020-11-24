@@ -27,4 +27,4 @@ Part of the project of analizing an existing bridge statistically
   By using a denser grid the *accuracy* is enhanced, but this leads to greater *computational cost*.\
   \
   \
-The files in folder **Solver in Matlab** were provided by the **School Of Civil Engineering, NTUA**.\
+The files in folder **Solver in Matlab** were provided by the **School Of Civil Engineering, NTUA**.
